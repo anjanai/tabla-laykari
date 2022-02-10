@@ -26,12 +26,22 @@ $( document ).ready(function() {
 	}
 
 	let arr = str.match(new RegExp('.{1,' + n + '}', 'g'));
-	console.log (arr);
-	let tr = $('<tr>');
-	$('<th>').html(i).appendTo(tr);  
+	let tr = "<tr>";
+	tr += "<th>" + i + "</th>";
+	let prev_digit = 0;
 	$.each(arr, function(_, val) {
-	    $('<td>').html(val).appendTo(tr);  
+	    tr += "<td>";
+	    let digits = val.split('');
+	    $.each(digits, function (_, digit) {
+		let color = "white";
+		if (digit !== "-" && digit != prev_digit) {
+		    tr += "<font color=salmon>" + digit + "</font>";
+		    prev_digit = digit;
+		} else
+		    tr += digit;
+	    });
 	});
+	tr += "</tr>";
 	$('#laykari').append(tr);
 
 	//console.log (str);
