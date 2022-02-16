@@ -14,16 +14,14 @@ $( document ).ready(function() {
     for (let i=1; i<=16; i++) {
 	let str = "";
 
-	if (gaps) {
-	    for (let j=1; j<=n; j++) {
-		str += patterns[i].replaceAll("1", j.toString());
-	    }
-	} else {
-	    for (let j=1; j<=n; j++) {
-		let jstr = j.toString();
-		str += jstr;
-		for (let k=1; k<i; k++)
-		    str +=  jstr;
+	for (let j=1; j<=n; j++)
+	    str += patterns[i].replaceAll("1", j.toString());
+	    
+	if (! gaps) {
+	    let digit=0;
+	    for (let j=0; j<str.length; j++) {
+		if (str[j] > '0' && str[j] <= '9') digit = str[j];
+		else str[j]=digit;
 	    }
 	}
 	
@@ -35,7 +33,7 @@ $( document ).ready(function() {
 	    tr += "<td>";
 	    let digits = val.split('');
 	    $.each(digits, function (_, digit) {
-		if (digit > "0" && digit < "9" && digit != prev_digit) {
+		if (digit > "0" && digit <= "9" && digit != prev_digit) {
 		    tr += "<font color=salmon>" + digit + "</font>";
 		    prev_digit = digit;
 		} else
