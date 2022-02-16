@@ -1,17 +1,4 @@
-// First, checks if it isn't implemented yet.
-if (!String.prototype.format) {
-  String.prototype.format = function() {
-    var args = arguments;
-    return this.replace(/{(\d+)}/g, function(match, number) { 
-      return typeof args[number] != 'undefined'
-        ? args[number]
-        : match
-      ;
-    });
-  };
-}
-
-var patterns = [
+const patterns = [
     "", "1", "1-", "1-1", "1-1-",
     "1-1-." , "1-1-..", "1-1-...", "1-1-....",
     "1-1-.1-1-", "1-1-..1-1-", "1-1-...1-1-", "1-1-....1-1-",
@@ -21,7 +8,7 @@ var patterns = [
 $( document ).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
     const n = urlParams.get('n');
-    var gaps = urlParams.get('gaps');
+    let gaps = urlParams.get('gaps');
     if (gaps === "") gaps = 1;
 	
     for (let i=1; i<=16; i++) {
@@ -39,8 +26,6 @@ $( document ).ready(function() {
 		    str +=  jstr;
 	    }
 	}
-	console.log (str);
-
 	
 	let arr = str.match(new RegExp('.{1,' + n + '}', 'g'));
 	let tr = "<tr>";
@@ -50,7 +35,6 @@ $( document ).ready(function() {
 	    tr += "<td>";
 	    let digits = val.split('');
 	    $.each(digits, function (_, digit) {
-		let color = "white";
 		if (digit > "0" && digit < "9" && digit != prev_digit) {
 		    tr += "<font color=salmon>" + digit + "</font>";
 		    prev_digit = digit;
