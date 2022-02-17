@@ -18,11 +18,13 @@ $( document ).ready(function() {
 	    str += patterns[i].replaceAll("1", j.toString());
 	    
 	if (! gaps) {
-	    let digit=0;
+	    str = str.split('');
+	    let digit;
 	    for (let j=0; j<str.length; j++) {
 		if (str[j] > '0' && str[j] <= '9') digit = str[j];
-		else str[j]=digit;
+		else str[j] = digit;
 	    }
+	    str = str.join('');
 	}
 	
 	let arr = str.match(new RegExp('.{1,' + n + '}', 'g'));
