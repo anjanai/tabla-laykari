@@ -26,8 +26,9 @@ $( document ).ready(function() {
 	    }
 	    str = str.join('');
 	}
-	
-	let arr = str.match(new RegExp('.{1,' + n + '}', 'g'));
+
+	// Template literals with backticks
+	let arr = str.match(new RegExp(`.{${n}}`, 'g'));
 	let tr = "<tr>";
 	tr += "<th>" + i + "</th>";
 	let prev_digit = 0;
