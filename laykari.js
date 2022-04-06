@@ -7,9 +7,14 @@ const patterns = [
 
 $( document ).ready(function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const n = urlParams.get('n');
+    let n = urlParams.get('n');
     let gaps = urlParams.get('gaps');
     if (gaps === "") gaps = 1;
+    if (! n) {
+	alert ("<n> not specified in url parameters: using n=5&gaps");
+	n = 5;
+	gaps = 1;
+    }
 	
     for (let i=1; i<=16; i++) {
 	let str = "";
