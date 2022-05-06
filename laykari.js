@@ -21,32 +21,72 @@ let tempo=100;
 
 function show_tempo_value(t) {
     document.getElementById("tempo_value").innerHTML=t;
+    tempo = t;
 }
 
-function play(link) {
-    const urlParams = new URLSearchParams(window.location.search);
-    let m = link.innerText;
+// Creation of an AbortController signal
+let controller;
+let signal;
+
+
+function play(m) {
+    controller = new AbortController();
+    signal = controller.signal;
     let sequence = [];
     for (i=0; i<n; i++)
 	for (j=0; j<m; j++)
 	    sequence.push(notes[i]);
-    playnotes(sequence);
+    playnotes(sequence,m);
+}
+
+let bg;
+
+
+function stopAudio() {
+    controller.abort();
+    $('td').css("background-color",bg);
 }
     
 
-async function playnotes(notes) {
-    let audio = new Audio( 'clap.wav');
+async function startAudio() {
+    for (let i=1; i<=16; i++) {
+	play(i);
+	await sleep (i * n * 60000/tempo);
+    }
+}
+
+async function playnotes(notes,m) {
+    let clap = new Audio( 'clap.wav');
     let i=0;
+    let j=1;
     for ( note of notes) {
-	if (i++==0) audio.play();
+	if (i++==0) {
+	    clap.play();
+	    $('#'+m+'_'+j).css("background-color","silver");
+	}
 	sampler.triggerAttackRelease(note, "2n");
-	if (i==n) i=0;
 	await sleep(60000/tempo);
+	if (i==n) {
+	    i=0;
+	    $('#'+m+'_'+j++).css("background-color", bg);
+	}
+	
     }
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    //return new Promise(resolve => setTimeout(resolve, ms));
+    if (signal.aborted)
+	return Promise.reject(new DOMException('Aborted', 'AbortError'));
+	
+    return new Promise((resolve, reject) => {
+	const timeout = window.setTimeout(resolve, ms, 'Promise Resolved')
+	// Listen for abort event on signal
+	signal.addEventListener('abort', () => {
+	    window.clearTimeout(timeout);
+	    reject(new DOMException('Aborted', 'AbortError'));
+	});
+    });
 }
 
 function start () {
@@ -84,10 +124,11 @@ $( document ).ready(function() {
 	// Template literals with backticks
 	let arr = str.match(new RegExp(`.{${n}}`, 'g'));
 	let tr = "<tr>";
-	tr += "<th>" + '<a href=# onClick=play(this)>' + i + "</a></th>";
+	tr += "<th>" + '<a href=# onClick=play(this.innerText)>' + i + "</a></th>";
 	let prev_digit = 0;
+	j = 1;
 	$.each(arr, function(_, val) {
-	    tr += "<td>";
+	    tr += `<td id=${i}_${j++}>`;
 	    let digits = val.split('');
 	    $.each(digits, function (_, digit) {
 		if (digit > "0" && digit <= "9" && digit != prev_digit) {
@@ -96,12 +137,14 @@ $( document ).ready(function() {
 		} else
 		    tr += digit;
 	    });
+	    tr += "</td>";
 	});
 	tr += "</tr>";
 	$('#laykari').append(tr);
 
 	//console.log (str);
     }
+    bg =  $('.table-dark').css("background-color");
 });
  
 

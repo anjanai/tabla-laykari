@@ -18,7 +18,10 @@
   </head>
  
   <body>
-    <p>Click on any number in the left most column to hear audio.
+    <p> Click these buttons to start/stop playing audio for the entire page.
+    <button onClick="startAudio()">Start Audio</button>
+    <button onClick="stopAudio()">Stop Audio</button>
+    <p>Click on any number in the left most column to hear audio only for that row.
     <p>Tempo: <span id="tempo_value" style="color:red;font-weight:bold;">100</span><br>
       20
       <input type="range" min="20" max="200" step="5" id="tempo_slider"
