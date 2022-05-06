@@ -2,10 +2,8 @@
 <html>
   <head>
     <title> Tabla Laykari</title>
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
-      crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/tone"></script>
+    <script src="https://unpkg.com/jquery"></script>
     <link rel="stylesheet"
 	  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -20,6 +18,12 @@
   </head>
  
   <body>
+    <p>Click on any number in the left most column to hear audio.
+    <p>Tempo: <span id="tempo_value" style="color:red;font-weight:bold;">100</span><br>
+      20
+      <input type="range" min="20" max="200" step="5" id="tempo_slider"
+	 value"=100" onchange="show_tempo_value(this.value)"> 
+      200
     <table  class="table table-dark table-bordered table-sm">
       <tbody id=laykari> </tbody>
     </table>
