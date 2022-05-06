@@ -2,10 +2,10 @@ const patterns = [
     "", "1", "1-", "1-1", "1-1-",
     "1-1-." , "1-1-..", "1-1-...", "1-1-....",
     "1-1-.1-1-", "1-1-..1-1-", "1-1-...1-1-", "1-1-....1-1-",
-    "1-1-1-.1-1-1-", "1-1-1-..1-1-1-", "1-1-1-...1-1-1-" , "1-1-1-....1-1-1-",
+    "1-1-1-.1-1-1-", "1-1-1-..1-1-1-", "1-1-1-...1-1-1-l" , "1-1-1-....1-1-1-",
 ];
 
-const notes = "C4 D4 E4 F4 G4 A4 B4 C5 D5 E5 F5 G5 A5 B5 C5 D5".split(/\s/);
+const notes = "C4 D4 E4 F4 G4 A4 B4 C5 D5 E5 F5 G5 A5 B5".split(/\s/);
 const sampler = new Tone.Sampler({
     urls: {
 	A4: "A4.mp3",
@@ -29,7 +29,7 @@ let controller;
 let signal;
 
 
-function play(m) {
+function playRow(m) {
     controller = new AbortController();
     signal = controller.signal;
     let sequence = [];
@@ -50,13 +50,14 @@ function stopAudio() {
 
 async function startAudio() {
     for (let i=1; i<=16; i++) {
-	play(i);
+	playRow(i);
 	await sleep (i * n * 60000/tempo);
     }
 }
 
+let clap = new Audio( 'clap.wav');
+
 async function playnotes(notes,m) {
-    let clap = new Audio( 'clap.wav');
     let i=0;
     let j=1;
     for ( note of notes) {
@@ -124,7 +125,7 @@ $( document ).ready(function() {
 	// Template literals with backticks
 	let arr = str.match(new RegExp(`.{${n}}`, 'g'));
 	let tr = "<tr>";
-	tr += "<th>" + '<a href=# onClick=play(this.innerText)>' + i + "</a></th>";
+	tr += "<th>" + '<a href=# onClick=playRow(this.innerText)>' + i + "</a></th>";
 	let prev_digit = 0;
 	j = 1;
 	$.each(arr, function(_, val) {
