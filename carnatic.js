@@ -42,24 +42,23 @@ $( document ).ready(function() {
     }
     $('#taals').append(tr);
 
-    tr = "<tr>";
-    $.each("Jaati Akshars &nbsp;".split(' '), function (_,val) {
-	tr += `<th>${val}</th>`;
-    });
-    tr += "</tr>";
+    tr = "";
     for (let i=0; i<taals.length;i+=2) {
 	let symbol = taals[i+1];
 	tr += "<tr>";
-	tr += `<td class="text-center table-success" colspan=3>Taal : ${taals[i]} ${symbol}</td>`;
+	tr += `<td class="text-center table-success" colspan=5>Taal : ${taals[i]} ${symbol}</td>`;
 	tr += "</tr>";
-	
+	tr += "<tr>";
+
 	$.each("3 4 5 7 9".split(' '), function (_,jaati) {
-	    tr += "<tr>";
-	    tr += `<td>${jaati}</td>`;
-	    tr += `<td>${akshars[symbol+jaati]}</td>`;
+	    //tr += `<td>${jaati}</td>`;
+	    //tr += `<td>${akshars[symbol+jaati]}</td>`;
+	    //tr += "</tr">;
+	    
 	    tr += gati_table(akshars[symbol+jaati],jaati);
-	    tr += `</tr>`;
 	});
+
+    	tr += `</tr>`;
     }
 
     $('#gatis').append(tr);
@@ -68,7 +67,8 @@ $( document ).ready(function() {
 
 function gati_table(total,jaati) {
     let n = parseInt(total.split(' ').pop());
-    let str = `<td><table class="table-sm table-bordered"><tr><td>Gati</td>`;
+    let str = `<td class="text-center">${jaati}<br>${total}<br>`;
+    str += `<table class="table-sm table-bordered"><tr><td>Gati</td>`;
     $.each("3 4 5 7 9".split(' '), function (_,gati) {
 	str += `<td>${gati}</td>`;
     });
