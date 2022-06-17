@@ -66,7 +66,8 @@ $( document ).ready(function() {
     
 });
 
-function gati_table(n,jaati) {
+function gati_table(total,jaati) {
+    let n = parseInt(total.split(' ').pop());
     let str = `<td><table class="table-sm table-bordered"><tr><td>Gati</td>`;
     $.each("3 4 5 7 9".split(' '), function (_,gati) {
 	str += `<td>${gati}</td>`;
@@ -85,17 +86,15 @@ function get_values(symbol) {
     str = '';
     $.each("3 4 5 7 9".split(' '), function (_,val) {
 	let total=0;
-	//str += `<td>${val}</td>`;
-	str += '<td>';
+	let td = '';
 	$.each(symbol.split(''), function (_,c) {
 	    let ch = ( c == '|' ? val : symbol2value[c]);
-	    str += ch + " ";
+	    td += ch + " ";
 	    total += parseInt(ch);
 	});
-	str += ` = ${total}`;
-	akshars[symbol+val] = total;
-	console.log(akshars);
-	str += '</td>';
+	td += "= " + total;
+	akshars[symbol+val] = td;
+	str += `<td>${td}</td>`;
     });
     return str;
 }
