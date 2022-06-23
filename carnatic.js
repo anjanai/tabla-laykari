@@ -47,14 +47,9 @@ $( document ).ready(function() {
 	let symbol = taals[i+1];
 	tr += "<tr>";
 	tr += `<td class="text-center table-success" colspan=5>Taal : ${taals[i]} ${symbol}</td>`;
-	tr += "</tr>";
-	tr += "<tr>";
+	tr += "</tr><tr>";
 
 	$.each("3 4 5 7 9".split(' '), function (_,jaati) {
-	    //tr += `<td>${jaati}</td>`;
-	    //tr += `<td>${akshars[symbol+jaati]}</td>`;
-	    //tr += "</tr">;
-	    
 	    tr += gati_table(akshars[symbol+jaati],jaati);
 	});
 

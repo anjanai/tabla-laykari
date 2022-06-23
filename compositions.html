@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title> Tabla Compositions</title>
+    <script src="https://unpkg.com/tone"></script>
+    <script src="https://unpkg.com/jquery"></script>
+    <link rel="stylesheet"
+	  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	  crossorigin="anonymous">
+    <style>
+      .comp-table td { font-family: monospace;}
+      .comp-table td:hover{ background-color: silver;}
+      tbody tr:nth-child(4n) {  border-bottom:10px solid #000;}
+    </style>
+    <script src=comps.js></script>
+    
+  </head>
+ 
+  <body>
+    <p>Tempo: <span id="tempo_value" style="color:red;font-weight:bold;">20</span><br>
+      10
+      <input type="range" min="10" max="200" step="5" id="tempo_slider"
+	 value"=20" onchange="show_tempo_value(this.value)"> 
+      200
+    <table  class="table table-dark table-bordered table-sm">
+      <tbody id=comps> </tbody>
+    </table>
+  </body>
+</html>
