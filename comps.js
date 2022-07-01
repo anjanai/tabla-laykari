@@ -102,6 +102,11 @@ $( document ).ready(function() {
     document.getElementById("tempo_slider").value = tempo;
 });
 
+function stopAudio() {
+    controller.abort();
+    $('td').css("background-color",bg);
+}
+
 function play_comp(index) {
     controller = new AbortController();
     signal = controller.signal;
